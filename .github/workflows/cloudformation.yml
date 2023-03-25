@@ -71,6 +71,7 @@ jobs:
             aws cloudformation create-stack --stack-name $STACK_NAME \
                 --template-body file://deployment.json \
             aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
-            echo "Stack $STACK_NAME criada com sucesso!"
+            echo "Stack $STACK_NAME criada com sucesso!" 
+          fi
 
 # --parameters ParameterKey=Param1,ParameterValue=Value1 ParameterKey=Param2,ParameterValue=Value2
