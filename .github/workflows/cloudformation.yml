@@ -59,7 +59,7 @@ jobs:
 
         STACK_NAME=bigdata-glue-athena
 
-        if ! aws cloudformation describe-stacks --stack-name $STACK_NAME ; then
+        if ! aws cloudformation describe-stacks --stack-name $STACK_NAME > /dev/null 2>&1; then
           aws cloudformation create-stack \
             --stack-name $STACK_NAME \
             --template-body file://deployment.json
