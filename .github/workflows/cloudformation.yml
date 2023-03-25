@@ -55,25 +55,27 @@ jobs:
         
     - name: Create CloudFormation Stack
       run: |
-          #!/bin/bash
-          STACK_NAME=bigdata-glue-athena
-          if ! aws cloudformation describe-stacks --stack-name $STACK_NAME ; then
-            aws cloudformation create-stack \
-              --stack-name #STACK_NAME \
-              --template-body file://deployment.json ;
-          else
-            echo "A stack $STACK_NAME já existe. Excluindo stack existente..."
-            aws cloudformation delete-stack --stack-name $STACK_NAME ;
-            aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME ;
-            echo "Stack $STACK_NAME excluída com sucesso!"
+        #!/bin/bash
 
-            echo "Criando nova stack $STACK_NAME..."
-            aws cloudformation create-stack 
-                --stack-name $STACK_NAME \
-                --template-body file://deployment.json ;
-            aws cloudformation wait stack-create-complete --stack-name $STACK_NAME;
-            echo "Stack $STACK_NAME criada com sucesso!" 
-          fi
+        STACK_NAME=bigdata-glue-athena
+
+        if ! aws cloudformation describe-stacks --stack-name $STACK_NAME ; then
+          aws cloudformation create-stack \
+            --stack-name $STACK_NAME \
+            --template-body file://deployment.json
+        else
+          echo "A stack $STACK_NAME já existe. Excluindo stack existente..."
+          aws cloudformation delete-stack --stack-name $STACK_NAME
+          aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME
+          echo "Stack $STACK_NAME excluída com sucesso!"
+
+          echo "Criando nova stack $STACK_NAME..."
+          aws cloudformation create-stack \
+            --stack-name $STACK_NAME \
+            --template-body file://deployment.json
+          aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
+          echo "Stack $STACK_NAME criada com sucesso!" 
+        fi
 
 
 
