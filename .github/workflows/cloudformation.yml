@@ -56,6 +56,6 @@ jobs:
     - name: Create CloudFormation Stack
       run: |
           aws cloudformation create-stack \
-            --stack-name my-stack \
+            --stack-name bigdata-glue-athena \
             --template-body file://deployment.json \
 # --parameters ParameterKey=Param1,ParameterValue=Value1 ParameterKey=Param2,ParameterValue=Value2
