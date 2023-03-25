@@ -1,7 +1,29 @@
 {
     "Resources": {
-        "HelloBucket": {
+        "dataFilesToProcess": {
             "Type": "AWS::S3::Bucket"
         }
+    },
+    "MyBucketPolicy": {
+    "Type": "AWS::IAM::Policy",
+    "Properties": {
+        "PolicyName": "MyBucketPolicy",
+        "PolicyDocument": {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+            "Sid": "AllowCreateBucket",
+            "Effect": "Allow",
+            "Action": "s3:CreateBucket",
+            "Resource": "arn:aws:s3:::my-bucket"
+            }
+        ]
+        },
+        "Groups": [],
+        "Roles": [],
+        "Users": [
+        "arn:aws:iam::991096851101:user/deployer"
+        ]
+       }
     }
 }
