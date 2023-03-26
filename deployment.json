@@ -50,12 +50,6 @@
                 "dataFilesToProcess"
             ]
         },
-        "DeployerUser": {
-            "Type": "AWS::IAM::User",
-            "Properties": {
-                "UserName": "deployer"
-            }
-        },
         "DeployerUserAccessKey": {
             "Type": "AWS::IAM::AccessKey",
             "Properties": {
