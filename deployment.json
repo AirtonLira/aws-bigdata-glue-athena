@@ -13,7 +13,15 @@
                 "PolicyName": "BucketDataFilesToProcess",
                 "PolicyDocument": {
                     "Version": "2012-10-17",
-                    "Statement": [
+                    "Statement": [                   
+                        {
+                            "Sid": "AllowGetUser",
+                            "Effect": "Allow",
+                            "Action": [
+                                "iam:GetUser"
+                            ],
+                            "Resource": "arn:aws:iam::991096851101:user/deployer"
+                        },
                         {
                             "Sid": "AllowCreateBucket",
                             "Effect": "Allow",
@@ -26,14 +34,6 @@
                                 "arn:aws:s3:::data-file-to-process",
                                 "arn:aws:s3:::data-file-to-process/*"
                             ]
-                        },
-                        {
-                            "Sid": "AllowGetUser",
-                            "Effect": "Allow",
-                            "Action": [
-                                "iam:GetUser"
-                            ],
-                            "Resource": "arn:aws:iam::991096851101:user/deployer"
                         }
                     ]
                 },
