@@ -24,7 +24,7 @@
                                 "iam:GetUser"
                             ],
                             "Resource": [
-                                "arn:aws:iam::991096851101:user/deployer"
+                                "arn:aws:iam::991096851101:user/bigdatauser"
                             ]
                         },
                         {
@@ -44,7 +44,7 @@
                 },
                 "Users": [
                     {
-                        "Ref": "DeployerUser"
+                        "Ref": "bigdatauser"
                     }
                 ]
             },
@@ -52,10 +52,10 @@
                 "dataFilesToProcess"
             ]
         },
-        "DeployerUser": {
+        "bigdatauser": {
             "Type": "AWS::IAM::User",
             "Properties": {
-                "UserName": "deployer"
+                "UserName": "bigdatauser"
             }
         }
     }
