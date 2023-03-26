@@ -8,7 +8,7 @@
             "Ref": "data-file-to-process"
           },
           "Key": "covid_data_2.csv",
-          "Source": "../data/covid_data_2.csv"
+          "Source": "./../data/covid_data_2.csv"
         }
       }
     }
