@@ -5,7 +5,15 @@
             "Type": "AWS::S3::Bucket",
             "Properties": {
                 "BucketName": "data-file-to-process"
+            },
+            
+            "iamPolicy": {
+               "Type": "AWS::IAM::Policy",
+               "Properties": {
+                  "PolicyName" : "MyBucketPolicy"
+               }
             }
+            
         },
         "MyBucketPolicy": {
             "Type": "AWS::IAM::Policy",
