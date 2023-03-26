@@ -5,15 +5,7 @@
             "Type": "AWS::S3::Bucket",
             "Properties": {
                 "BucketName": "data-file-to-process"
-            },
-            
-            "iamPolicy": {
-               "Type": "AWS::IAM::Policy",
-               "Properties": {
-                  "PolicyName" : "MyBucketPolicy"
-               }
-            }
-            
+            }            
         },
         "MyBucketPolicy": {
             "Type": "AWS::IAM::Policy",
@@ -26,7 +18,7 @@
                             "Sid": "AllowCreateBucket",
                             "Effect": "Allow",
                             "Action": "s3:CreateBucket",
-                            "Resource": "arn:aws:s3:::my-bucket"
+                            "Resource": "arn:aws:s3:::data-file-to-process"
                         }
                     ]
                 },
