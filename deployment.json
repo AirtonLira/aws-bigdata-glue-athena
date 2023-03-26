@@ -5,13 +5,13 @@
             "Type": "AWS::S3::Bucket",
             "Properties": {
                 "BucketName": "data-file-to-process",
-                "AccessControl": "PublicReadWrite",
+                "AccessControl": "PublicReadWrite"
             }
         },
-        "MyBucketPolicy": {
+        "BucketDataFilesPolicy": {
             "Type": "AWS::IAM::Policy",
             "Properties": {
-                "PolicyName": "BucketDataFilesToProcess",
+                "PolicyName": "BucketDataFilesPolicy",
                 "PolicyDocument": {
                     "Version": "2012-10-17",
                     "Statement": [
@@ -54,42 +54,6 @@
             "Type": "AWS::IAM::User",
             "Properties": {
                 "UserName": "deployer"
-            }
-        },
-        "DeployerUserAccessKey": {
-            "Type": "AWS::IAM::AccessKey",
-            "Properties": {
-                "UserName": {
-                    "Ref": "DeployerUser"
-                }
-            }
-        },
-        "BigDataGlueAthena": {
-            "Type": "AWS::IAM::User",
-            "Properties": {
-                "UserName": "BigDataGlueAthena",
-                "Policies": [
-                    {
-                        "PolicyName": "AllowS3CreateBucket",
-                        "PolicyDocument": {
-                            "Version": "2012-10-17",
-                            "Statement": [
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "s3:CreateBucket",
-                                        "s3:ListBucket",
-                                        "s3:PutObject"
-                                    ],
-                                    "Resource": [
-                                        "arn:aws:s3:::data-file-to-process",
-                                        "arn:aws:s3:::data-file-to-process/*"
-                                    ]
-                                }
-                            ]
-                        }
-                    }
-                ]
             }
         }
     }
