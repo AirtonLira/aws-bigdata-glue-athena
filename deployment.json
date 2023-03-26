@@ -33,12 +33,7 @@
                         }
                     ]
                 }
-            },
-            "Users": [
-                {
-                    "Ref": "bigdatauser"
-                }
-            ]
+            }
         },
         "bigdatauser": {
             "Type": "AWS::IAM::User",
