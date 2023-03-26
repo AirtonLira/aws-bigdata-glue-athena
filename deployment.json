@@ -68,7 +68,7 @@
                         ]
                     }
                 }
-        },
+            ],
         "DeployerUserAccessKey": {
             "Type": "AWS::IAM::AccessKey",
             "Properties": {
@@ -78,4 +78,5 @@
             }
         }
     }
+  }
 }
