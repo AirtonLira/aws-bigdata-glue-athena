@@ -5,7 +5,7 @@
             "Type": "AWS::S3::Bucket",
             "Properties": {
                 "BucketName": "data-file-to-process"
-            }            
+            }
         },
         "MyBucketPolicy": {
             "Type": "AWS::IAM::Policy",
@@ -29,15 +29,29 @@
                         }
                     ]
                 },
-                "Groups": [],
-                "Roles": [],
                 "Users": [
-                    "arn:aws:iam::991096851101:user/deployer"
+                    {
+                        "Ref": "DeployerUser"
+                    }
                 ]
             },
             "DependsOn": [
                 "dataFilesToProcess"
             ]
+        },
+        "DeployerUser": {
+            "Type": "AWS::IAM::User",
+            "Properties": {
+                "UserName": "deployer"
+            }
+        },
+        "DeployerUserAccessKey": {
+            "Type": "AWS::IAM::AccessKey",
+            "Properties": {
+                "UserName": {
+                    "Ref": "DeployerUser"
+                }
+            }
         }
     }
 }
