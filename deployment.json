@@ -6,18 +6,6 @@
             "Properties": {
                 "BucketName": "data-file-to-process",
                 "BucketPolicy": {
-                    "Fn::ImportValue": "BucketDataFilesPolicy"
-                },
-                "DependsOn": [
-                    "BucketDataFilesPolicy"
-                ]
-            }
-        },
-        "BucketDataFilesPolicy": {
-            "Type": "AWS::IAM::Policy",
-            "Properties": {
-                "PolicyName": "BucketDataFilesPolicy",
-                "PolicyDocument": {
                     "Version": "2012-10-17",
                     "Statement": [
                         {
@@ -44,13 +32,13 @@
                             ]
                         }
                     ]
-                },
-                "Users": [
-                    {
-                        "Ref": "bigdatauser"
-                    }
-                ]
-            }
+                }
+            },
+            "Users": [
+                {
+                    "Ref": "bigdatauser"
+                }
+            ]
         },
         "bigdatauser": {
             "Type": "AWS::IAM::User",
