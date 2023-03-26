@@ -59,11 +59,6 @@ jobs:
 
         STACK_NAME=bigdata-glue-athena
 
-        # Executa o comando para descrever o stack e filtra a saída pelo status "ROLLBACK_COMPLETE"
-        STACK_STATUS=$(aws cloudformation describe-stacks --stack-name "$STACK_NAME" --query "Stacks[].StackStatus" --output text | grep -o "ROLLBACK_COMPLETE")
-        if [[ "$STACK_STATUS" == "ROLLBACK_COMPLETE" ]]; then
-           echo "O stack está em estado ROLLBACK_COMPLETE excluir stack na aws"
-
         if ! aws cloudformation describe-stacks --stack-name $STACK_NAME > /dev/null 2>&1; then
           aws cloudformation create-stack \
             --stack-name $STACK_NAME \
