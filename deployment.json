@@ -4,13 +4,13 @@
         "dataFilesToProcess": {
             "Type": "AWS::S3::Bucket",
             "Properties": {
-                "BucketName": "my-bucket"
+                "BucketName": "dataFilesToProcess"
             }
         },
         "MyBucketPolicy": {
             "Type": "AWS::IAM::Policy",
             "Properties": {
-                "PolicyName": "MyBucketPolicy",
+                "PolicyName": "BucketDataFilesToProcess",
                 "PolicyDocument": {
                     "Version": "2012-10-17",
                     "Statement": [
