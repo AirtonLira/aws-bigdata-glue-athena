@@ -84,7 +84,7 @@ jobs:
         #!/bin/bash
 
         STACK_NAME=bigdata-glue-athena
-        mv
+
         aws cloudformation deploy --template-file ./steps/dataupload.json --stack-name $STACK_NAME --region us-east-1
 
 
