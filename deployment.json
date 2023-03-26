@@ -36,12 +36,7 @@
                             ]
                         }
                     ]
-                },
-                "Users": [
-                    {
-                        "Ref": "DeployerUser"
-                    }
-                ]
+                }
             },
             "DependsOn": [
                 "dataFilesToProcess"
@@ -51,7 +46,28 @@
             "Type": "AWS::IAM::User",
             "Properties": {
                 "UserName": "deployer"
-            }
+            },
+            "Policies": [
+                {
+                    "PolicyName": "AllowS3CreateBucket",
+                    "PolicyDocument": {
+                        "Version": "2012-10-17",
+                        "Statement": [
+                            {
+                                "Effect": "Allow",
+                                "Action": [
+                                    "s3:CreateBucket",
+                                    "s3:ListBucket",
+                                    "s3:PutObject"
+                                ],
+                                "Resource": [
+                                    "arn:aws:s3:::data-file-to-process",
+                                    "arn:aws:s3:::data-file-to-process/*"
+                                ]
+                            }
+                        ]
+                    }
+                }
         },
         "DeployerUserAccessKey": {
             "Type": "AWS::IAM::AccessKey",
