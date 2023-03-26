@@ -1,0 +1,15 @@
+{
+    "resources": {
+        "MyS3Object": {
+            "Type": "AWS::S3::Object",
+            "Properties": {
+            "Bucket": {
+                "Ref": "data-file-to-process"
+            },
+            "Key": "covid_data_2.csv",
+            "Source": "../data/covid_data_2.csv"
+            }
+        }
+    }
+
+}

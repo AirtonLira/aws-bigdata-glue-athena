@@ -62,7 +62,7 @@ jobs:
         if ! aws cloudformation describe-stacks --stack-name $STACK_NAME > /dev/null 2>&1; then
           aws cloudformation create-stack \
             --stack-name $STACK_NAME \
-            --template-body file://deployment.json \
+            --template-body file://steps/deployment.json \
             --capabilities CAPABILITY_NAMED_IAM
         else
           echo "A stack $STACK_NAME já existe. Excluindo stack existente..."
@@ -73,11 +73,17 @@ jobs:
           echo "Criando nova stack $STACK_NAME..."
           aws cloudformation create-stack \
             --stack-name $STACK_NAME \
-            --template-body file://deployment.json \
+            --template-body file://steps/deployment.json \
             --capabilities CAPABILITY_NAMED_IAM
           aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
           echo "Stack $STACK_NAME criada com sucesso!" 
         fi
+
+    - name: Deploy CloudFormation Data files
+      run: |
+        #!/bin/bash
+        aws cloudformation deploy --template-file file://steps/dataupload.json --stack-name $STACK_NAME --region us-east-1
+
 
 
 
