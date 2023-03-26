@@ -7,7 +7,10 @@
                 "BucketName": "data-file-to-process",
                 "BucketPolicy": {
                     "Fn::ImportValue": "BucketDataFilesPolicy"
-                }
+                },
+                "DependsOn": [
+                    "BucketDataFilesPolicy"
+                ]
             }
         },
         "BucketDataFilesPolicy": {
@@ -47,10 +50,7 @@
                         "Ref": "bigdatauser"
                     }
                 ]
-            },
-            "DependsOn": [
-                "dataFilesToProcess"
-            ]
+            }
         },
         "bigdatauser": {
             "Type": "AWS::IAM::User",
