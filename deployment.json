@@ -51,6 +51,12 @@
             "DependsOn": [
                 "dataFilesToProcess"
             ]
+        },
+        "DeployerUser": {
+            "Type": "AWS::IAM::User",
+            "Properties": {
+                "UserName": "deployer"
+            }
         }
     }
 }
