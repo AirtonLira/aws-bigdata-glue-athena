@@ -1,15 +1,15 @@
 {
-    "resources": {
-        "MyS3Object": {
-            "Type": "AWS::S3::Object",
-            "Properties": {
-            "Bucket": {
-                "Ref": "data-file-to-process"
-            },
-            "Key": "covid_data_2.csv",
-            "Source": "../data/covid_data_2.csv"
-            }
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+      "MyS3Object": {
+        "Type": "AWS::S3::Object",
+        "Properties": {
+          "Bucket": {
+            "Ref": "data-file-to-process"
+          },
+          "Key": "covid_data_2.csv",
+          "Source": "../data/covid_data_2.csv"
         }
+      }
     }
-
-}
+  }
