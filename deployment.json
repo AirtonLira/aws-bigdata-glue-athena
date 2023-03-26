@@ -5,7 +5,9 @@
             "Type": "AWS::S3::Bucket",
             "Properties": {
                 "BucketName": "data-file-to-process",
-                "AccessControl": "PublicReadWrite"
+                "BucketPolicy": {
+                    "Fn::ImportValue": "BucketDataFilesPolicy"
+                }
             }
         },
         "BucketDataFilesPolicy": {
@@ -49,12 +51,6 @@
             "DependsOn": [
                 "dataFilesToProcess"
             ]
-        },
-        "DeployerUser": {
-            "Type": "AWS::IAM::User",
-            "Properties": {
-                "UserName": "deployer"
-            }
         }
     }
 }
