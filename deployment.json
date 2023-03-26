@@ -13,14 +13,16 @@
                 "PolicyName": "BucketDataFilesToProcess",
                 "PolicyDocument": {
                     "Version": "2012-10-17",
-                    "Statement": [                   
+                    "Statement": [
                         {
                             "Sid": "AllowGetUser",
                             "Effect": "Allow",
                             "Action": [
                                 "iam:GetUser"
                             ],
-                            "Resource": "arn:aws:iam::991096851101:user/deployer"
+                            "Resource": [
+                                "arn:aws:iam::991096851101:user/deployer"
+                            ]
                         },
                         {
                             "Sid": "AllowCreateBucket",
@@ -45,27 +47,33 @@
         "BigDataGlueAthena": {
             "Type": "AWS::IAM::User",
             "Properties": {
-                "UserName": "BigDataGlueAthena",
-                "Policies": [
-                    {
-                        "PolicyName": "AllowS3CreateBucket",
-                        "PolicyDocument": {
-                            "Version": "2012-10-17",
-                            "Statement": [
-                                {
-                                    "Effect": "Allow",
-                                    "Action": [
-                                        "s3:CreateBucket",
-                                        "s3:ListBucket",
-                                        "s3:PutObject"
-                                    ],
-                                    "Resource": [
-                                        "arn:aws:s3:::data-file-to-process",
-                                        "arn:aws:s3:::data-file-to-process/*"
-                                    ]
-                                }
+                "UserName": "BigDataGlueAthena"
+            }
+        },
+        "BigDataGlueAthenaPolicy": {
+            "Type": "AWS::IAM::Policy",
+            "Properties": {
+                "PolicyName": "AllowS3CreateBucket",
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Action": [
+                                "s3:CreateBucket",
+                                "s3:ListBucket",
+                                "s3:PutObject"
+                            ],
+                            "Resource": [
+                                "arn:aws:s3:::data-file-to-process",
+                                "arn:aws:s3:::data-file-to-process/*"
                             ]
                         }
+                    ]
+                },
+                "Users": [
+                    {
+                        "Ref": "BigDataGlueAthena"
                     }
                 ]
             }
