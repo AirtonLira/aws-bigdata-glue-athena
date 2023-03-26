@@ -4,7 +4,35 @@
         "dataFilesToProcess": {
             "Type": "AWS::S3::Bucket",
             "Properties": {
-                "BucketName": "data-file-to-process"
+                "BucketName": "data-file-to-process",
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Sid": "AllowGetUser",
+                            "Effect": "Allow",
+                            "Action": [
+                                "iam:GetUser"
+                            ],
+                            "Resource": [
+                                "arn:aws:iam::991096851101:user/deployer"
+                            ]
+                        },
+                        {
+                            "Sid": "AllowCreateBucket",
+                            "Effect": "Allow",
+                            "Action": [
+                                "s3:CreateBucket",
+                                "s3:ListBucket",
+                                "s3:PutObject"
+                            ],
+                            "Resource": [
+                                "arn:aws:s3:::data-file-to-process",
+                                "arn:aws:s3:::data-file-to-process/*"
+                            ]
+                        }
+                    ]
+                }
             }
         },
         "MyBucketPolicy": {
