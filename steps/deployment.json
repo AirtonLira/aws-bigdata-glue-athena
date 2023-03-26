@@ -50,8 +50,12 @@
       "BucketName": {
         "Value": {
           "Ref": "DataBucket"
+        },
+        "Export": {
+            "Name": "DataBucket"
         }
       }
     }
   }
   
+
