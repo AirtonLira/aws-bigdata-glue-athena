@@ -64,7 +64,7 @@ jobs:
             --stack-name $STACK_NAME \
             --template-body file://deployment.json \
             --capabilities CAPABILITY_NAMED_IAM
-        else
+        elses
           echo "A stack $STACK_NAME já existe. Excluindo stack existente..."
           aws cloudformation delete-stack --stack-name $STACK_NAME
           aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME
