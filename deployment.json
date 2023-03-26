@@ -4,7 +4,7 @@
         "dataFilesToProcess": {
             "Type": "AWS::S3::Bucket",
             "Properties": {
-                "BucketName": "data_file_to_process"
+                "BucketName": "data-file-to-process"
             }
         },
         "MyBucketPolicy": {
