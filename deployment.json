@@ -26,6 +26,14 @@
                                 "arn:aws:s3:::data-file-to-process",
                                 "arn:aws:s3:::data-file-to-process/*"
                             ]
+                        },
+                        {
+                            "Sid": "AllowGetUser",
+                            "Effect": "Allow",
+                            "Action": [
+                                "iam:GetUser"
+                            ],
+                            "Resource": "arn:aws:iam::991096851101:user/deployer"
                         }
                     ]
                 },
