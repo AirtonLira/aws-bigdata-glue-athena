@@ -99,8 +99,7 @@ jobs:
           fi
         done
 
-        echo "Stack is not in CREATE_IN_PROGRESS state. Executing deploy command..."
-        aws cloudformation deploy --template-file steps/aws-glue-athena.json --stack-name $STACK_NAME --region $REGION
+        echo "Stack is not in CREATE_IN_PROGRESS state. Finish Stack"
 
 
 
