@@ -88,6 +88,8 @@ jobs:
         STACK_NAME=bigdata-glue-athena
         REGION=us-east-1
 
+    - name: Execute deploy aws glue in stack cloudformation
+      run: |
         while true; do
           stack_status=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $REGION --query 'Stacks[0].StackStatus' --output text)
 
