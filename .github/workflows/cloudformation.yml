@@ -90,7 +90,7 @@ jobs:
 
         STACK_NAME=bigdata-glue-athena
 
-        aws cloudformation deploy --template-file steps/aws-glue-athena.json --stack-name $STACK_NAME --region us-east-1
+        aws cloudformation wait deploy --template-file steps/aws-glue-athena.json --stack-name $STACK_NAME --region us-east-1
 
 
 
