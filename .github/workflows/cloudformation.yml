@@ -99,7 +99,9 @@ jobs:
           fi
         done
 
-        echo "Stack is not in CREATE_IN_PROGRESS state. Finish Stack"
+        echo "Stack is not in CREATE_IN_PROGRESS state. Finish stack."
+        echo "Execution deploy Glue Crawler to Data files"
+        aws cloudformation deploy --template-file steps/aws-glue.json --stack-name $STACK_NAME --region $REGION
 
 
 

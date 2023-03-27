@@ -1,0 +1,97 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+      "CovidDatabase": {
+        "Type": "AWS::Glue::Database",
+        "Properties": {
+          "CatalogId": "991096851101",
+          "DatabaseInput": {
+            "Name": "covid",
+            "Description": "Database for COVID CSV data"
+          }
+        }
+      },
+      "CsvClassifier": {
+        "Type": "AWS::Glue::Classifier",
+        "Properties": {
+          "CsvClassifier": {
+            "Name": "CSVClassifier",
+            "Delimiter": ",",
+            "QuoteSymbol": "\"",
+            "ContainsHeader": "PRESENT",
+            "AllowSingleColumn": true
+          }
+        }
+      },
+      "CovidCrawler": {
+        "Type": "AWS::Glue::Crawler",
+        "Properties": {
+          "Role": {
+            "Fn::GetAtt": ["CrawlerRole", "Arn"]
+          },
+          "DatabaseName": {
+            "Ref": "CovidDatabase"
+          },
+          "Name": "CovidCrawler",
+          "Description": "Crawler for COVID CSV data",
+          "Targets": {
+            "S3Targets": [
+              {
+                "Path": "s3://data-file-to-process"
+              }
+            ]
+          },
+          "Classifiers": [
+            {
+              "Ref": "CsvClassifier"
+            }
+          ],
+          "TablePrefix": "dadoscovid_"
+        }
+      },
+      "CrawlerRole": {
+        "Type": "AWS::IAM::Role",
+        "Properties": {
+          "RoleName": "CrawlerRole",
+          "AssumeRolePolicyDocument": {
+            "Version": "2012-10-17",
+            "Statement": [
+              {
+                "Effect": "Allow",
+                "Principal": {
+                  "Service": ["glue.amazonaws.com"]
+                },
+                "Action": ["sts:AssumeRole"]
+              }
+            ]
+          },
+          "Path": "/",
+          "ManagedPolicyArns": [
+            "arn:aws:iam::aws:policy/service-role/AWSGlueServiceRole"
+          ],
+          "Policies": [
+            {
+              "PolicyName": "CrawlerPolicy",
+              "PolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Action": [
+                      "s3:GetObject",
+                      "s3:ListBucket"
+                    ],
+                    "Resource": [
+                      "arn:aws:s3:::data-file-to-process",
+                      "arn:aws:s3:::data-file-to-process/*"
+                    ]
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+  
