@@ -84,6 +84,18 @@ jobs:
         #!/bin/bash
         aws s3 cp data/covid_data_2.csv s3://data-file-to-process/ --region us-east-1
 
+    - name: Deploy AWS Glue Crawler to Data files
+      run: |
+        #!bin/bash
+
+        STACK_NAME=bigdata-glue-athena
+
+        aws cloudformation deploy --template-file steps/aws-glue-athena.json --stack-name $STACK_NAME --region us-east-1
+
+
+
+
+
 
 
 
