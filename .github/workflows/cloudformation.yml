@@ -82,8 +82,7 @@ jobs:
     - name: Deploy CloudFormation Data files
       run: |
         #!/bin/bash
-
-        pwd
+        aws s3 cp covid_data.csv s3://nome-do-bucket/ --region us-east-1
 
 
 
