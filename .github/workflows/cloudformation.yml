@@ -79,13 +79,13 @@ jobs:
           echo "Stack $STACK_NAME criada com sucesso!" 
         fi
 
-    - name: Deploy CloudFormation Data files
-      run: |
-        #!/bin/bash
+    # - name: Deploy CloudFormation Data files
+    #   run: |
+    #     #!/bin/bash
 
-        STACK_NAME=bigdata-glue-athena
+    #     STACK_NAME=bigdata-glue-athena
 
-        aws cloudformation deploy --template-file ./steps/dataupload.json --stack-name $STACK_NAME --region us-east-1
+    #     aws cloudformation deploy --template-file ./steps/dataupload.json --stack-name $STACK_NAME --region us-east-1
 
 
 

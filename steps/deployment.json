@@ -44,6 +44,16 @@
             ]
           }
         }
+      },
+      "MyS3Object": {
+        "Type": "AWS::S3::Object",
+        "Properties": {
+           "Bucket": {
+                "Ref": "DataBucket"
+            },
+          "Key": "covid_data_2.csv",
+          "Source": "../covid_data_2.csv"
+        }
       }
     },
     "Outputs": {
