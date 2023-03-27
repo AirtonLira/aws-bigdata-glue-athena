@@ -46,7 +46,7 @@
               "Ref": "CsvClassifier"
             }
           ],
-          "TablePrefix": "dadoscovid_"
+          "TablePrefix": ""
         }
       },
       "CrawlerRole": {
