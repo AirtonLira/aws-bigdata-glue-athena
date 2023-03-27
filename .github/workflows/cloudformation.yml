@@ -66,7 +66,7 @@ jobs:
             --capabilities CAPABILITY_NAMED_IAM
         else
           echo "A stack $STACK_NAME já existe. Excluindo stack existente..."
-          
+
           aws s3 rm s3://data-file-to-process --recursive
 
           aws cloudformation delete-stack --stack-name $STACK_NAME
@@ -74,6 +74,8 @@ jobs:
           echo "Stack $STACK_NAME excluída com sucesso!"
 
           echo "Criando nova stack $STACK_NAME..."
+
+          sleep 60
           aws cloudformation create-stack \
             --stack-name $STACK_NAME \
             --template-body file://steps/deployment.json \
