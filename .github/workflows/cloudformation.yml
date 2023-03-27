@@ -79,14 +79,11 @@ jobs:
           echo "Stack $STACK_NAME criada com sucesso!" 
         fi
 
-    - name: Deploy CloudFormation Data files
-      run: |
-        #!/bin/bash
+        echo "Deploy CloudFormation Data files"
+
         aws s3 cp data/covid_data_2.csv s3://data-file-to-process/ --region us-east-1
 
-    - name: Deploy AWS Glue Crawler to Data files
-      run: |
-        #!/bin/bash
+        echo "Deploy AWS Glue Crawler to Data files"
 
         STACK_NAME=bigdata-glue-athena
         REGION=us-east-1
