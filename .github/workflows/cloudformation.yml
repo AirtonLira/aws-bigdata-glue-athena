@@ -103,7 +103,7 @@ jobs:
 
         echo "Stack is ok state. Finish stack."
         echo "Execution deploy Glue Crawler to Data files"
-        aws cloudformation deploy --template-file steps/aws-glue.json --stack-name $STACK_NAME --region $REGION
+        aws cloudformation deploy --template-file steps/aws-glue.json --stack-name $STACK_NAME --capabilities CAPABILITY_NAMED_IAM --region $REGION
 
 
 
