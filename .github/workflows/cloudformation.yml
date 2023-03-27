@@ -75,7 +75,7 @@ jobs:
 
           echo "Criando nova stack $STACK_NAME..."
 
-          sleep 60
+          sleep 59
           aws cloudformation create-stack \
             --stack-name $STACK_NAME \
             --template-body file://steps/deployment.json \
