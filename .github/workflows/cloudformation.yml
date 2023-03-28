@@ -60,7 +60,7 @@ jobs:
         STACK_NAME=bigdata-glue-athena
         REGION=us-east-1
 
-        stack_status=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $REGION --query 'Stacks[0].StackStatus' --output text)
+        stack_status=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $REGION --query 'Stacks[0].StackStatus' --output text 2>&1 || true)
 
         if [ -n "$stack_status" ]; then
           echo "A stack $STACK_NAME já existe. Excluindo stack existente..."
