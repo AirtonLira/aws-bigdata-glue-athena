@@ -121,7 +121,7 @@ jobs:
         REGION=us-east-1
 
         # Get the Crawler name from the stack outputs
-        CRAWLER_NAME=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[?OutputKey=='CovidCrawler'].OutputValue" --output text)
+        CRAWLER_NAME=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs.OutputValue" --output text)
 
         echo 'Obtido o nome do crawler: ' $CRAWLER_NAME
         sleep 20
