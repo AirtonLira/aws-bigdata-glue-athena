@@ -78,7 +78,6 @@ jobs:
           --template-body file://steps/deployment.json \
           --capabilities CAPABILITY_NAMED_IAM
 
-          aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
         else
           echo "Criando nova stack $STACK_NAME..."
           
@@ -86,7 +85,7 @@ jobs:
           --stack-name $STACK_NAME \
           --template-body file://steps/deployment.json \
           --capabilities CAPABILITY_NAMED_IAM
-          
+
         fi
         echo "Stack criada!"
 
