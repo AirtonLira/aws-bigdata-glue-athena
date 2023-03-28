@@ -76,6 +76,18 @@ jobs:
           echo "Criando nova stack $STACK_NAME..."
 
           sleep 59
+
+          while true; do
+          stack_status=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $REGION --query 'Stacks[0].StackStatus' --output text)
+
+          if [ "$stack_status" == "CREATE_IN_PROGRESS" -o "$stack_status" == "ROLLBACK_COMPLETE" -o "$stack_status" == "DELETE_IN_PROGRESS" -o "$stack_status" == "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS"]; then
+            echo "Stack is in CREATE_IN_PROGRESS or ROLLBACK_COMPLETE state. Waiting..."
+            sleep 80
+          else
+            break
+          fi
+          done
+
           aws cloudformation create-stack \
             --stack-name $STACK_NAME \
             --template-body file://steps/deployment.json \
@@ -109,6 +121,27 @@ jobs:
         echo "Stack is ok state. Finish stack."
         echo "Execution deploy Glue Crawler to Data files"
         aws cloudformation deploy --template-file steps/aws-glue.json --stack-name $STACK_NAME --capabilities CAPABILITY_NAMED_IAM --region $REGION
+
+    - name: Start crawler in AWS Glue
+      run: |
+        #!/bin/bash
+
+        STACK_NAME=bigdata-glue-athena
+        REGION=us-east-1
+
+        # Get the Crawler name from the stack outputs
+        CRAWLER_NAME=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[?OutputKey=='CovidCrawler'].OutputValue" --output text)
+
+        echo 'Obtido o nome do crawler: ' $CRAWLER_NAME
+        sleep 20
+
+
+        echo 'Iniciando o crawler...' 
+        # Start the Crawler
+        aws glue start-crawler --name $CRAWLER_NAME
+
+
+        echo 'Crawler iniciado com sucesso!'
 
 
 
