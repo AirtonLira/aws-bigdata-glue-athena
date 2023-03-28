@@ -62,6 +62,7 @@ jobs:
 
         if ! aws cloudformation describe-stacks --stack-name $STACK_NAME > /dev/null 2>&1
         RESULT=$?
+
         if [ $RESULT -eq 0 ]; then
           aws cloudformation create-stack \
             --stack-name $STACK_NAME \
@@ -79,8 +80,8 @@ jobs:
           echo "Criando nova stack $STACK_NAME..."
 
           sleep 59
-
-          while true; do
+        fi
+        while true; do
           stack_status=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $REGION --query 'Stacks[0].StackStatus' --output text)
 
           if [ "$stack_status" == "CREATE_IN_PROGRESS" -o "$stack_status" == "ROLLBACK_COMPLETE" -o "$stack_status" == "DELETE_IN_PROGRESS" -o "$stack_status" == "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS"]; then
