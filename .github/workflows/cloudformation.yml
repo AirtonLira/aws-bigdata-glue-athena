@@ -58,6 +58,7 @@ jobs:
         #!/bin/bash
 
         STACK_NAME=bigdata-glue-athena
+        REGION=us-east-1
 
         if ! aws cloudformation describe-stacks --stack-name $STACK_NAME > /dev/null 2>&1; then
           aws cloudformation create-stack \
