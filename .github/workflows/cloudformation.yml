@@ -86,8 +86,7 @@ jobs:
           --stack-name $STACK_NAME \
           --template-body file://steps/deployment.json \
           --capabilities CAPABILITY_NAMED_IAM
-
-          aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
+          
         fi
         echo "Stack criada!"
 
