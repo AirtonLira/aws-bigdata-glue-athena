@@ -53,6 +53,17 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ env.AWS_REGION }}
 
+    - name: Valid exist Stack in CloudFormation
+      run: |
+        #!/bin/bash
+
+        STACK_NAME=bigdata-glue-athena
+        REGION=us-east-1
+
+        if aws cloudformation describe-stacks --stack-name STACK_NAME >/dev/null 2>&1; then
+            echo "A stack já existe, deve ser excluida via interface manualmente."
+            exit 1
+        fi
 
         
     - name: Create CloudFormation Stack
@@ -68,7 +79,7 @@ jobs:
           --stack-name $STACK_NAME \
           --template-body file://steps/deployment.json \
           --capabilities CAPABILITY_NAMED_IAM
-          
+
         echo "Stack $STACK_NAME criada com sucesso!"
 
     - name: Execute deploy aws glue in stack cloudformation
@@ -105,7 +116,16 @@ jobs:
 
 
         echo 'Crawler iniciado com sucesso!'
-        sleep 60
+        sleep 90
+
+    - name: Deploy and configure AWS Athena
+      run: |
+        #!/bin/bash
+
+        echo "Iniciando a criação, configuração e deploy da AWS Athena"
+        echo "Com database: covid e tabela: data_file_to_process"
+
+        aws cloudformation deploy --template-file steps/query-athena.json --stack-name $STACK_NAME --capabilities CAPABILITY_NAMED_IAM --region $REGION
 
 
 

@@ -1,0 +1,66 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Resources": {
+        "ResultDataBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+                "BucketName": "result-data-covid"
+            }
+        },
+        "AthenaQueryResultBucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+                "Bucket": {
+                    "Ref": "ResultDataBucket"
+                },
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "athena.amazonaws.com"
+                            },
+                            "Action": [
+                                "s3:GetBucketLocation",
+                                "s3:ListBucket"
+                            ],
+                            "Resource": {
+                                "Fn::Sub": "arn:aws:s3:::${ResultDataBucket}"
+                            }
+                        },
+                        {
+                            "Effect": "Allow",
+                            "Principal": {
+                                "Service": "athena.amazonaws.com"
+                            },
+                            "Action": [
+                                "s3:GetObject",
+                                "s3:PutObject"
+                            ],
+                            "Resource": {
+                                "Fn::Sub": "arn:aws:s3:::${ResultDataBucket}/*"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        "AthenaQueryResultBucket": {
+            "Type": "AWS::Athena::NamedQuery",
+            "Properties": {
+                "Database": "covid",
+                "Name": "date_formated_covid",
+                "QueryString": "SELECT date_parse(date_died,'%d/%m/%Y') as data_formated,* FROM covid.data_file_to_process where date_died is not null and date_died <> '' and sex >= 0 limit 20;",
+                "QueryExecutionContext": {
+                    "Database": "covid"
+                },
+                "ResultConfiguration": {
+                    "OutputLocation": {
+                        "Fn::Sub": "s3://${ResultDataBucket}/query-results/"
+                    }
+                }
+            }
+        }
+    }
+}
