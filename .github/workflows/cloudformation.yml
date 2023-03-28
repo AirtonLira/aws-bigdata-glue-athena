@@ -83,6 +83,8 @@ jobs:
 
           if [ "$stack_status" == "CREATE_IN_PROGRESS" -o "$stack_status" == "ROLLBACK_COMPLETE" -o "$stack_status" == "DELETE_IN_PROGRESS" -o "$stack_status" == "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS"]; then
             echo "Stack is in CREATE_IN_PROGRESS or ROLLBACK_COMPLETE state. Waiting..."
+            aws cloudformation delete-stack --stack-name $STACK_NAME
+            aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME
             sleep 80
           else
             break
@@ -104,7 +106,6 @@ jobs:
       run: |
         #!/bin/bash
 
-        aws s3 cp data/covid_data_2.csv s3://data-file-to-process/ --region us-east-1
         STACK_NAME=bigdata-glue-athena
         REGION=us-east-1
 
@@ -121,6 +122,9 @@ jobs:
 
         echo "Stack is ok state. Finish stack."
         echo "Execution deploy Glue Crawler to Data files"
+
+        aws s3 cp data/covid_data_2.csv s3://data-file-to-process/ --region us-east-1
+        
         aws cloudformation deploy --template-file steps/aws-glue.json --stack-name $STACK_NAME --capabilities CAPABILITY_NAMED_IAM --region $REGION
 
     - name: Start crawler in AWS Glue
