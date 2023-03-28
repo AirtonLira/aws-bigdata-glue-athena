@@ -86,12 +86,12 @@ jobs:
 
         echo "Deploy CloudFormation Data files"
 
-        aws s3 cp data/covid_data_2.csv s3://data-file-to-process/ --region us-east-1
 
     - name: Execute deploy aws glue in stack cloudformation
       run: |
         #!/bin/bash
 
+        aws s3 cp data/covid_data_2.csv s3://data-file-to-process/ --region us-east-1
         STACK_NAME=bigdata-glue-athena
         REGION=us-east-1
 
