@@ -108,19 +108,8 @@ jobs:
         STACK_NAME=bigdata-glue-athena
         REGION=us-east-1
 
-        while true; do
-          stack_status=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $REGION --query 'Stacks[0].StackStatus' --output text)
-
-          if [ "$stack_status" == "CREATE_IN_PROGRESS" -o "$stack_status" == "ROLLBACK_COMPLETE" ]; then
-            echo "Stack is in CREATE_IN_PROGRESS or ROLLBACK_COMPLETE state. Waiting..."
-            sleep 60
-          else
-            break
-          fi
-        done
-
-        echo "Stack is ok state. Finish stack."
         echo "Execution deploy Glue Crawler to Data files"
+        sleep 60
 
         aws s3 cp data/covid_data_2.csv s3://data-file-to-process/ --region us-east-1
 
