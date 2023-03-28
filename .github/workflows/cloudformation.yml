@@ -99,24 +99,7 @@ jobs:
           --capabilities CAPABILITY_NAMED_IAM
 
         fi
-        echo "Stack criada!"
-
-
-        while true; do
-          stack_status=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $REGION --query 'Stacks[0].StackStatus' --output text)
-
-          if [ "$stack_status" == "CREATE_IN_PROGRESS" -o "$stack_status" == "ROLLBACK_COMPLETE" -o "$stack_status" == "DELETE_IN_PROGRESS" -o "$stack_status" == "UPDATE_COMPLETE_CLEANUP_IN_PROGRESS" ]; then
-            echo "Stack is in CREATE_IN_PROGRESS or ROLLBACK_COMPLETE state. Waiting..."
-            sleep 60
-          else
-            break
-          fi
-        done
-
-        aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
         echo "Stack $STACK_NAME criada com sucesso!"
-
-        echo "Deploy CloudFormation Data files"
 
     - name: Execute deploy aws glue in stack cloudformation
       run: |
