@@ -56,23 +56,29 @@ jobs:
     - name: Create CloudFormation Stack
       run: |
         #!/bin/bash
+        
         STACK_NAME=bigdata-glue-athena
         REGION=us-east-1
+
         aws cloudformation describe-stacks --stack-name $STACK_NAME > /dev/null 2>&1
         RESULT=$?
+
         if [ $RESULT -eq 0 ]; then
           echo "A stack $STACK_NAME já existe. Excluindo stack existente..."
+
           aws s3 rm s3://data-file-to-process --recursive
+
           aws cloudformation delete-stack --stack-name $STACK_NAME
           aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME
           echo "Stack $STACK_NAME excluída com sucesso!"
+
           echo "Criando nova stack $STACK_NAME..."
 
           aws cloudformation create-stack \
           --stack-name $STACK_NAME \
           --template-body file://steps/deployment.json \
           --capabilities CAPABILITY_NAMED_IAM
-          
+
           aws cloudformation wait stack-create-complete --stack-name $STACK_NAME
         else
           echo "Criando nova stack $STACK_NAME..."
@@ -102,8 +108,6 @@ jobs:
         echo "Stack $STACK_NAME criada com sucesso!"
 
         echo "Deploy CloudFormation Data files"
-
-
 
     - name: Execute deploy aws glue in stack cloudformation
       run: |
