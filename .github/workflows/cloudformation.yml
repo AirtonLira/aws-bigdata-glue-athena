@@ -145,6 +145,7 @@ jobs:
 
 
         echo 'Crawler iniciado com sucesso!'
+        sleep 60
 
 
 
